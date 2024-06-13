@@ -1,0 +1,34 @@
+exs 1 (getting_started.c)
+
+skips the first (0th) element on printing.
+why? when i is 0, if condition evaluates false.
+For all non-zero values of i, condition evaluates true.
+
+exs 2
+
+if an unsigned value is at 0, and is decremented,
+it will take on the maximum value for that given type (wrap)
+
+exs 4 (heron.c)
+in phase 1, starting with x=1, multiply/divide by 2 until
+product of a and x gets near 1 (within 0.5)
+
+in phase 2, use the last x value, use heron's formula until
+a and x is approximately 1
+
+exs 5 (heron.c)
+
+argc contains the number of arguments provided to the program
+argv contains the (string) values of each argument provided
+to the program
+
+Note: first argument is always ./program_name
+
+exs 6 (heron.c)
+eps1m01 = 1.0 - 0x1P-01 = 0.5
+
+controls how long phase1 runs
+(i.e. how close a*x must get to 1 before we move onto heron's approx)
+
+larger values -> phase1 is longer, and heron's is shorter
+smaller -> phase 1 is shorter and heron's is longer.

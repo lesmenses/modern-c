@@ -1,0 +1,49 @@
+exs 3
+
+N/A
+
+
+exs 5
+installed musl-gcc and clang
+gcc already installed
+
+c99 and gcc compiled without problem
+clang generated 3 errors
+
+exs 6
+add include for stdio.h (for printf)
+main function needs to return int
+
+
+exs 7
+original declares arrays like:
+// Declarations
+  double A[5] = {                                      /*@\label{array-declaration}*/
+    [0] = 9.0,                                         /*@\label{designated-init}*/
+    [1] = 2.9,
+    [4] = 3.E+25,                                      /*@\label{scientific-notation}*/
+    [3] = .00007,                                      /*@\label{comma-terminate}*/
+  };
+
+bad declares array like:
+  double A[5] = {
+    9.0,
+    2.9,
+    3.E+25,
+    .00007,
+  };
+
+different array ordering.
+
+exs 9
+{}
+- enclose array value initialization
+- enclose body of for loop
+- enclose body of main function
+
+[]
+- specifying array size at declaration
+- specifying index for each array value
+- indexing into the array to access value
+
+
