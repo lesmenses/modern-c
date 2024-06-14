@@ -36,3 +36,6 @@ smaller -> phase 1 is shorter and heron's is longer.
 exs 7 (switch.c)
 Removing breaks mean the result of a case will bleed into the next.
 i.e. removing break for case m, means magpie and raven output will be shown.
+
+exs8 (clock.c)
+None
