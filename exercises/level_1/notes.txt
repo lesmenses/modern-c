@@ -37,5 +37,32 @@ exs 7 (switch.c)
 Removing breaks mean the result of a case will bleed into the next.
 i.e. removing break for case m, means magpie and raven output will be shown.
 
-exs8 (clock.c)
+exs 8 (clock.c)
 None
+
+exs 13
+
+Consider if the platform uses 32bits to represent long long.
+Then the min value of long long --> -(2^32 / 2) = 2147483648
+         max value of long long --> (2^32 / 2) - 1 = 2147483648 -1 = 2147483647
+
+If we wanted to represent -2147483648 as a literal, recall it is comprised of two parts
+    1. negative float literal
+    2. decimal literal of +2147483648
++2147483648 > long long max = +2147483647 --> doesn't fit! We cannot represent the
+system's smallest integger value with a decimal literal!
+
+exs 14
+
+In a 16-bit system, the maximum unsigned value is 2^16-1 = 65535.
+                    the minimum signed value is -2^15 = 32768
+                    the maximum signed value is 2^15-1 = 32767 
+-0x8000 is:
+    1. negative float literal
+    2. decimal literal of 0x8000 = 32768
+
+32768 does not fit in the signed value -> so it must be an unsigned.
+In unsigned due to wraparound, -32768 = 65536-32768 = 32768
+    Note: we use 65536 because it is equivalent to 0.
+
+exs 15
