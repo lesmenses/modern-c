@@ -65,4 +65,156 @@ In a 16-bit system, the maximum unsigned value is 2^16-1 = 65535.
 In unsigned due to wraparound, -32768 = 65536-32768 = 32768
     Note: we use 65536 because it is equivalent to 0.
 
-exs 15
+exs 15 (literals.c)
+
+exs 17
+Assuming max unsigned int is 0xFFFFFFFF = 4294967295
+
+Attempting to store -0x80000000, comprised of:
+    1. negation
+    2. 2147483648
+into an unsigned type, results in 4294967296 - 2147483648 = 2147483648 = 0x80000000
+
+exs 22
+Consider: A = 1010 1010
+          B = 0011 1100
+
+A \ B = 1000 0010 (from set theory: \ is the set complement operator)
+
+A & B = 1010 1010 & 0011 1100 = 0010 1000
+A - (A & B) = 1010 1010 - 0010 1000 = 1000 0010
+
+Therefore A \ B = A - (A & B)
+
+
+exs 23
+V = 0xFFFF = 1111 1111 1111 1111
+
+V + 1 = 0001 0000 0000 0000
+But, V is only 32 bits -> V + 1 = 0001 0000 0000 0000 % (1111 1111 1111 1111 + 1)
+                                = 0001 0000 0000 0000 % 0001 0000 0000 0000
+                                = 0
+
+
+exs 24
+A = 0000 0000 1111 0000
+B = 0000 0001 0001 1111
+
+A ^ B = 0000 0001 1110 1111
+
+A - (A & B) + B - (A & B)
+A & B = 0000 0000 0001 0000
+A - (A & B) = 0000 0000 1110 0000
+B - (A & B) = 0000 0001 0000 1111
+A - (A & B) + B - (A & B) = 0000 0001 1110 1111
+A ^ B == A - (A & B) + B - (A & B)
+
+
+A + B - 2*(A & B)
+A & B = 0000 0000 0001 0000
+2 * (A & B) = 0000 0000 0010 0000 -> (left shift equivalent to multiply y 2)
+A + B = 0000 0010 0000 1111
+A + B - 2 * (A & B) = 0000 0001 1110 1111
+A ^ B == A + B - 2 * (A & B)
+
+exs 25
+A = 0000 0000 1111 0000
+B = 0000 0001 0001 1111
+
+A + B - (A & B)
+A | B = 0000 0001 1111 1111
+A + B - (A & B)
+A & B = 0000 0000 0001 0000
+A + B = 0000 0010 0000 1111
+A + B - (A & B) = 0000 0001 1111 1111
+A | B == A + B - (A & B)
+
+exs 26
+V = 1111 1111 1111 1111
+B = 0000 0001 0001 1111
+
+~B = 1111 1110 1110 0000
+
+V - B = 1111 1110 1110 0000
+
+exs 27
+B = 0000 0001 0001 1111
+
+Recall: to negate, need to take two's complement:
+ - invert bits
+ - add 1
+-B = 1111 1110 1110 0001
+
+~B + 1
+~B = 1111 1110 1110 0000
+~B + 1 = 1111 1110 1110 0001
+-B == ~B + 1
+
+exs 28
+x = 1111 1111
+
+1111 1111 >> 2 = 0011 1111 (lost two bits)
+1111 1111 % (1 << 2) = 255 % 4 = 2
+
+1111 1111 >> 3 = 0001 1111 (lost three bits)
+1111 1111 % (1 << 3) = 255 % 8 = 3
+
+exs 30
+A = 0011 1100
+
+A + (~A)
+~A = 1100 0011
+A + ~A = 1111 1111
+A + ~A == Max 8 bit value
+
+exs 31
+A = 0011 1100
+A + ~A = 1111 1111
+
+-1 in unsigned:
+1 = 0000 0001
+-1 = ~(0000 0001) + 1 = 1111 1110 + 1 = 1111 1111
+A + ~A == -1
+
+exs 32
+A = 0011 1100
+
+A + (~A + 1)
+~A = 1100 0011
+~A + 1 = 1100 0100
+A + (~A + 1) = 1 0000 0000 = 0000 0000 (when confined to 8 bits.)
+A + (~A + 1) == 0
+
+exs 33
+Consider an 8 bit signed integer
+INT_MIN = -128 = 1000 0000
+INT_MAX = 127 = 0111 1111
+
+INT_MIN + INT_MAX = 1111 1111
+
+-1 in 2s complement:
+1 = 0000 0001
+-1 = 1111 1111
+
+INT_MIN + INT_MAX == -1
+
+exs 34
+for uintN_t types:
+    UINTN_MIN = 0
+    UINTN_MAX = 2^N - 1
+
+for intN_t types:
+    INTN_MIN = -2^(N-1)
+    INTN_MAX = 2^(N-1) - 1
+
+
+exs 35
+value = s * 2^e * (f_1 * 2^-1 + f_2 * 2^-2 + ... + f_p * 2^-p)
+      = s * 2^e * 2^-p * (f_1 * 2^-1 * 2^p + f_2 * 2^-2 * 2^p + ... + f_p * 2^-p * 2^p)
+      = s * 2^(e-p) * (f_1 * 2^(p-1) + f_2 * 2^(p-2) + ... + f_p)
+--> the value for (e > p) is a multiple of 2^(e-p)
+
+exs 36 (float.c)
+If reduced, 1E-13 + 1E-13 and (1e-13 + (1e-13 + large_value)) - large_value
+should return the same result. But due to how the decimal part of the float
+gets cutoff depending on how big the float value is, the result will be different!
