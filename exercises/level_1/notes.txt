@@ -218,3 +218,6 @@ exs 36 (float.c)
 If reduced, 1E-13 + 1E-13 and (1e-13 + (1e-13 + large_value)) - large_value
 should return the same result. But due to how the decimal part of the float
 gets cutoff depending on how big the float value is, the result will be different!
+
+
+exs 41 (strcmp.c)
