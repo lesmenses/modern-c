@@ -221,3 +221,36 @@ gets cutoff depending on how big the float value is, the result will be differen
 
 
 exs 41 (strcmp.c)
+
+exs 43 (time_diff.c)
+
+exs 45 (fib_leaf.c)
+n = 10 -> 55 leaf calls -> 1.61803^10 / sqrt(5) = 55.00
+n = 20 -> 6765 leaf calls -> 1.61803^20 / sqrt(5) = 6764.66
+
+exs 46 (fib.c)
+n = 20 -> 0.001s
+n = 30 -> 0.006s
+n = 40 -> 0.363s
+n = 50 -> 50.784s
+
+exs 47
+for any recursive call fib(n), either n has been calculated (in which case, it is an O(1) lookup)
+or we need to calculate it (which will happen for each term n only). Therefore, it is O(n).
+
+Instead of T_fib = F_n(C0 + C1) -> T_fib = n(C0 + C1), because we only have to calculate the
+n distinct fibonacci numbers once, instead of calculating every one again.
+
+exs 48 (fib_cache.c)
+n = 20 -> 0.001s
+n = 30 -> 0.001s
+n = 40 -> 0.001s
+n = 50 -> 0.001s
+
+exs 49 (fib_iter.c)
+
+exs 50(fib_iter.c)
+n = 20 -> 0.001s
+n = 30 -> 0.001s
+n = 40 -> 0.001s
+n = 50 -> 0.001s
