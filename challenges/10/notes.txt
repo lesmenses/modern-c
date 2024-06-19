@@ -1,0 +1,24 @@
+nlogn
+10 -> 10
+100 -> 200
+1000 -> 3000
+10 000 -> 40 000
+100 000 -> 500 000
+1 000 000 -> 6 000 000
+
+Quick sort results:
+
+Took 751 ns to quick sort 10 elements -> x75.1 from nlogn
+Took 7565 ns to quick sort 100 elements -> x37.825 from nlogn
+Took 98026 ns to quick sort 1000 elements -> x32.675 from nlogn
+Took 1212222 ns to quick sort 10000 elements -> x30.306 from nlogn
+Took 14980736 ns to quick sort 100000 elements -> x29.961 from nlogn
+Took 113219995 ns to quick sort 1000000 elements -> x18.87 from nlogn
+
+
+Merge sort results:
+Took 1999 ns to merge sort 10 elements -> x200 from nlogn
+Took 12604 ns to merge sort 100 elements -> x63.02 from nlogn
+Took 165360 ns to merge sort 1000 elements -> x55.12 from nlogn
+Took 1951845 ns to merge sort 10000 elements -> x48.796 from nlogn
+Took 29158862 ns to merge sort 100000 elements -> x58.3177 from nlogn

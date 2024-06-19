@@ -7,8 +7,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
-void print_array(size_t length, double values[length]);
+#include <stdbool.h>
+#include "sort_double.h"
 
 void quick_sort(size_t length, double array[length]) {
     if(length <= 1) return; // No sorting to do.
@@ -95,7 +95,7 @@ void print_array(size_t length, double values[length]) {
     printf("]\n");
 }
 
-void is_sorted(size_t length, double values[length]) {
+bool is_sorted(size_t length, double values[length]) {
 
     for(int i = 0; i < length; i++) {
         if(i == 0) {
@@ -104,28 +104,28 @@ void is_sorted(size_t length, double values[length]) {
         if (values[i-1] > values[i]) {
             printf("ERROR: Following array failed.\n");
             print_array(length, values);
-            assert(0);
+            return false;
         }
     }
-    printf("Check complete.\n");
+    return true;
 }
 
 void verify_merge(void) {
     double values_1[2] = {1, 0};
     merge_sort(2, values_1);
-    is_sorted(2, values_1);
+    assert(is_sorted(2, values_1));
 
     double values_2[2] = {1, -1};
     merge_sort(2, values_2);
-    is_sorted(2, values_2);
+    assert(is_sorted(2, values_2));
 
     double values_3[1] = {1};
     merge_sort(1, values_3);
-    is_sorted(1, values_3);
+    assert(is_sorted(1, values_3));
 
     double values_4[] = {23, 10, 54, 8, 4, -10};
     merge_sort(sizeof(values_4)/sizeof(double), values_4);
-    is_sorted(sizeof(values_4)/sizeof(double), values_4);
+    assert(is_sorted(sizeof(values_4)/sizeof(double), values_4));
 
     printf("Verification complete.\n");
 }
@@ -133,27 +133,32 @@ void verify_merge(void) {
 void verify_quick(void) {
     double values_1[2] = {1, 0};
     quick_sort(2, values_1);
-    is_sorted(2, values_1);
+    assert(is_sorted(2, values_1));
 
     double values_2[2] = {1, -1};
     quick_sort(2, values_2);
-    is_sorted(2, values_2);
+    assert(is_sorted(2, values_2));
 
     double values_3[1] = {1};
     quick_sort(1, values_3);
-    is_sorted(1, values_3);
+    assert(is_sorted(1, values_3));
 
     double values_4[] = {23, 10, 54, 8, 4, -10};
     quick_sort(sizeof(values_4)/sizeof(double), values_4);
-    is_sorted(sizeof(values_4)/sizeof(double), values_4);
+    assert(is_sorted(sizeof(values_4)/sizeof(double), values_4));
 
     double values_5[] = {23, -10, 54, 8, 4, -10};
     quick_sort(sizeof(values_5)/sizeof(double), values_5);
-    is_sorted(sizeof(values_5)/sizeof(double), values_5);
+    assert(is_sorted(sizeof(values_5)/sizeof(double), values_5));
 
     printf("Verification complete.\n");
 }
 
+/*
+Define INCLUDE via compiler options to disable main
+s.t. sort_double can be used by another program.
+*/
+#ifndef INCLUDE
 int main(int argc, char* argv[argc + 1]) {
     if(argc == 1) {
         printf("No data to sort.\n");
@@ -179,3 +184,4 @@ int main(int argc, char* argv[argc + 1]) {
 
     return EXIT_SUCCESS;
 }
+#endif
