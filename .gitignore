@@ -52,3 +52,9 @@ Mkfile.old
 dkms.conf
 
 **.vscode
+
+bin/
+lib/
+share/
+include/
+*.png

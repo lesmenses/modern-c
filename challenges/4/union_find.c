@@ -9,6 +9,8 @@ Union Find problem on forests (disjoint set of trees).
 #include <assert.h>
 #include <stdbool.h>
 
+#include "union_find.h"
+
 void print_forest(size_t nodes, size_t parent[nodes]);
 
 void initialize(size_t nodes, size_t forest[nodes]) {
@@ -64,11 +66,13 @@ size_t find_compress(size_t index, size_t nodes, size_t forest[nodes]) {
     return forest[index];
 }
 
-void forest_union(size_t element_a, size_t element_b, size_t nodes, size_t forest[nodes]) {
+size_t forest_union(size_t element_a, size_t element_b, size_t nodes, size_t forest[nodes]) {
     if(element_a >= nodes || element_b >= nodes)
         assert(0 && "Invalid element_a or element_b.");
-    
-    find_replace(element_b, find_compress(element_a, nodes, forest), nodes, forest);
+    size_t new_root = find_compress(element_a, nodes, forest);
+    find_replace(element_b, new_root, nodes, forest);
+
+    return new_root;
 }
 
 void test_find() {
@@ -183,10 +187,15 @@ void test_forest_union() {
         4,
         4
     };
-    forest_union(8, 2, 10, parent_1);
+    assert(forest_union(8, 2, 10, parent_1) == 4);
     assert(is_forests_equal(10, parent_1, expected_1));
 }
 
+/*
+Define INCLUDE via compiler options to disable main
+s.t. sort_double can be used by another program.
+*/
+#ifndef INCLUDE
 int main(void) {
     test_find();
     test_find_replace();
@@ -195,3 +204,4 @@ int main(void) {
     printf("Complete.\n");
     return EXIT_SUCCESS;
 }
+#endif
